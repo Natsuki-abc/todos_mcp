@@ -13,10 +13,23 @@ app.get('/system/ping', (c) => {
   return c.json({ message: 'pong' })
 })
 
-// 一覧取得
+// タスク一覧取得
 app.get('/todos', async (c) => {
   const todos = await prisma.todo.findMany()
   return c.json(todos)
+})
+
+// タスク追加
+app.post('/todos', async (c) => {
+  const body = await c.req.json()
+  const { title } = body
+  if (!title) {
+    return c.json({ error: 'Title is required'}, 400)
+  }
+  const todo = await prisma.todo.create({
+    data: { title }
+  })
+  return c.json(todo)
 })
 
 serve({
