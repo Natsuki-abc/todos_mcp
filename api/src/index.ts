@@ -39,7 +39,7 @@ app.put('/todos/:id', async (c) => {
   const { title, completed } = body
 
   // バリデーション
-  if (!isNaN(id) && id <= 0) {
+  if (isNaN(id) && id <= 0) {
     return c.json({ error: 'Invalid ID format'}, 400)
   }
 
@@ -65,7 +65,7 @@ app.delete('/todos/:id', async (c) => {
   console.log('Delete Todo item ID:', id)
 
   // バリデーション
-  if (!isNaN(id) && id <= 0) {
+  if (isNaN(id) && id <= 0) {
     return c.json({ error: 'Invalid ID format'}, 400)
   }
 
