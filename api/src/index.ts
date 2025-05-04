@@ -32,6 +32,33 @@ app.post('/todos', async (c) => {
   return c.json(todo)
 })
 
+// タスク更新
+app.put('/todos/:id', async (c) => {
+  const id = Number(c.req.param('id'))
+  const body = await c.req.json()
+  const { title, completed } = body
+
+  // バリデーション
+  if (!isNaN(id) && id <= 0) {
+    return c.json({ error: 'Invalid ID format'}, 400)
+  }
+
+  try {
+    const todo = await prisma.todo.update({
+      where: {id},
+      data: { title, completed },
+    })
+    return c.json(todo)
+  } catch (e) {
+    console.error('Error updating Todo:', e)
+
+    if (e.code === 'P2025') {
+      return c.json({ error: 'Todo not found'}, 404)
+    }
+    return c.json({ error: 'Failed to update Todo'}, 500)
+  }
+})
+
 serve({
   fetch: app.fetch,
   port: 3000
