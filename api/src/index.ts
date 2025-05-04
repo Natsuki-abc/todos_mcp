@@ -49,7 +49,32 @@ app.put('/todos/:id', async (c) => {
       data: { title, completed },
     })
     return c.json(todo)
-  } catch (e) {
+  } catch (e: any) {
+    console.error('Error updating Todo:', e)
+
+    if (e.code === 'P2025') {
+      return c.json({ error: 'Todo not found'}, 404)
+    }
+    return c.json({ error: 'Failed to update Todo'}, 500)
+  }
+})
+
+// タスク削除
+app.delete('/todos/:id', async (c) => {
+  const id = Number(c.req.param('id'))
+  console.log('Delete Todo item ID:', id)
+
+  // バリデーション
+  if (!isNaN(id) && id <= 0) {
+    return c.json({ error: 'Invalid ID format'}, 400)
+  }
+
+  try {
+    await prisma.todo.delete({
+      where: { id }
+    })
+    return c.json({ success: true })
+  } catch (e: any) {
     console.error('Error updating Todo:', e)
 
     if (e.code === 'P2025') {
@@ -61,7 +86,7 @@ app.put('/todos/:id', async (c) => {
 
 serve({
   fetch: app.fetch,
-  port: 3000
+  port: 8080,
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
 })
