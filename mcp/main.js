@@ -92,7 +92,7 @@ async function updateTodoItem(id, completed) {
     }
     try {
         const response = await fetch(`http://localhost:8080/todos/${id}`, {
-            'method': 'PUT',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
