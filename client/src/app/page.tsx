@@ -23,8 +23,15 @@ type Todo = {
 };
 
 const getTodos = async () => {
-  const response = await fetch("http://localhost:8080/todos");
-  return response.json();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/";
+
+  try {
+    const response = await fetch(`${API_URL}todos`);
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    throw new Error("Failed to fetch todos");
+  }
 };
 
 export default function Home() {
@@ -102,7 +109,7 @@ export default function Home() {
                                   : "bg-gray-200 dark:bg-slate-700 dark:text-slate-100 rounded-tl-none"
                               )}
                             >
-                              <p className="whitespace-pro-line break-words">
+                              <p className="whitespace-pre-line break-words">
                                 {message.content}
                               </p>
                             </div>
