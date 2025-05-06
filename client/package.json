@@ -12,11 +12,18 @@
     "@ai-sdk/google": "^1.2.14",
     "@ai-sdk/react": "^1.2.11",
     "@modelcontextprotocol/sdk": "^1.11.0",
+    "@radix-ui/react-scroll-area": "^1.2.8",
+    "@radix-ui/react-slot": "^1.2.2",
     "@tanstack/react-query": "^5.75.2",
     "ai": "^4.3.13",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.9.7",
+    "lucide-react": "^0.507.0",
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.2.0",
     "zod": "^3.24.4"
   },
   "devDependencies": {
@@ -28,6 +35,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
+    "tw-animate-css": "^1.2.9",
     "typescript": "^5"
   }
 }
